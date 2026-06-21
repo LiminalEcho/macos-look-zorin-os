@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full Guide — macOS Look on Zorin OS</title>
+  <meta name="description" content="Complete 18-step guide to make Zorin OS 17 Core look and feel like macOS on a MacBook. Covers boot screen, themes, fonts, battery, fan control, shortcuts and more.">
+  <meta name="keywords" content="zorin os macos theme guide, whitesur zorin, mac plymouth linux, zorin os macbook setup, linux macos look tutorial">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://liminalecho.github.io/macos-look-zorin-os/guide.html">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #1A1A1A;
+      --gray-dark: #4A4A4A;
+      --gray-mid: #6E6E73;
+      --gray-light: #D1D1D6;
+      --gray-bg: #F5F5F7;
+      --white: #FFFFFF;
+      --blue: #0071E3;
+      --border: #E5E5EA;
+      --code-bg: #1C1C1E;
+      --code-text: #E5E5EA;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 2rem;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+
+    .nav-logo {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--black); }
+
+    /* LAYOUT */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: sticky;
+      top: 72px;
+    }
+
+    .sidebar-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+      text-decoration: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+    .sidebar-nav a:hover {
+      background: var(--gray-bg);
+      color: var(--black);
+    }
+
+    .sidebar-nav .step-num {
+      font-size: 0.72rem;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* CONTENT */
+    .content h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .content .subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-mid);
+      margin-bottom: 0.8rem;
+    }
+
+    .content .tested {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--blue);
+      background: #EBF4FF;
+      padding: 0.3rem 0.8rem;
+      border-radius: 980px;
+      margin-bottom: 2.5rem;
+    }
+
+    .content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    .content h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      margin-top: 3rem;
+      padding-top: 1rem;
+    }
+
+    .content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.8rem;
+      margin-top: 2rem;
+      color: var(--black);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .step-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--blue);
+      background: #EBF4FF;
+      padding: 0.2rem 0.6rem;
+      border-radius: 980px;
+      white-space: nowrap;
+    }
+
+    .step-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--black);
+    }
+
+    .content p {
+      color: var(--gray-dark);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .content strong { color: var(--black); font-weight: 600; }
+
+    /* CODE */
+    .content pre {
+      background: var(--code-bg);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      overflow-x: auto;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .content code {
+      font-family: "SF Mono", "JetBrains Mono", "Fira Code", monospace;
+      font-size: 0.82rem;
+      color: var(--code-text);
+      line-height: 1.8;
+    }
+
+    .content p code, .content li code {
+      background: var(--gray-bg);
+      color: var(--black);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+
+    /* TABLES */
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .content th {
+      background: var(--gray-bg);
+      padding: 0.7rem 1rem;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .content td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--gray-dark);
+    }
+
+    .content tr:last-child td { border-bottom: none; }
+    .content td:first-child { color: var(--black); font-weight: 500; }
+
+    /* LISTS */
+    .content ul, .content ol {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--gray-dark);
+      font-size: 0.95rem;
+    }
+
+    .content li { margin-bottom: 0.4rem; }
+
+    /* NOTE BOX */
+    .note {
+      background: #EBF4FF;
+      border-left: 3px solid var(--blue);
+      border-radius: 0 8px 8px 0;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+      color: var(--gray-dark);
+    }
+
+    /* RESULT TABLE */
+    .result-summary {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .result-summary h3 {
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+    }
+
+    /* CTA */
+    .guide-cta {
+      background: var(--black);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .guide-cta h3 {
+      color: var(--white);
+      font-size: 1.3rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-cta p {
+      color: #8E8E93;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--white);
+      color: var(--black);
+      padding: 0.7rem 1.6rem;
+      border-radius: 980px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn:hover { background: var(--gray-bg); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      background: var(--black);
+      border-top: 1px solid #2C2C2E;
+    }
+
+    footer p { font-size: 0.8rem; color: #636366; }
+    footer a { color: #636366; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .page { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">macos-look-zorin-os</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#step-1">Steps</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="https://github.com/LiminalEcho/macos-look-zorin-os">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-title">On this page</div>
+      <ul class="sidebar-nav">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#quick-install">Quick Install</a></li>
+        <li><a href="#step-1"><span class="step-num">01</span> Plymouth Boot</a></li>
+        <li><a href="#step-2"><span class="step-num">02</span> WhiteSur Theme</a></li>
+        <li><a href="#step-3"><span class="step-num">03</span> Cursors</a></li>
+        <li><a href="#step-4"><span class="step-num">04</span> Icons</a></li>
+        <li><a href="#step-5"><span class="step-num">05</span> GDM Logo</a></li>
+        <li><a href="#step-6"><span class="step-num">06</span> Fonts</a></li>
+        <li><a href="#step-7"><span class="step-num">07</span> Sound Theme</a></li>
+        <li><a href="#step-8"><span class="step-num">08</span> Dock Layout</a></li>
+        <li><a href="#step-9"><span class="step-num">09</span> Touchpad</a></li>
+        <li><a href="#step-10"><span class="step-num">10</span> Lid Suspend</a></li>
+        <li><a href="#step-11"><span class="step-num">11</span> Boot Time</a></li>
+        <li><a href="#step-12"><span class="step-num">12</span> SSD</a></li>
+        <li><a href="#step-13"><span class="step-num">13</span> Battery TLP</a></li>
+        <li><a href="#step-14"><span class="step-num">14</span> Fan mbpfan</a></li>
+        <li><a href="#step-15"><span class="step-num">15</span> Firewall</a></li>
+        <li><a href="#step-16"><span class="step-num">16</span> Timeshift</a></li>
+        <li><a href="#step-17"><span class="step-num">17</span> RAM</a></li>
+        <li><a href="#step-18"><span class="step-num">18</span> Shortcuts</a></li>
+        <li><a href="#maintenance">Maintenance</a></li>
+        <li><a href="#results">Results</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+      <h1>macOS Look on Zorin OS 17 Core</h1>
+      <p class="subtitle">A complete customization guide for old MacBooks and any Ubuntu-based PC</p>
+      <span class="tested">Tested on MacBook Air 2013 · Zorin OS 17 Core · GNOME 46 · Wayland</span>
+
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>This guide transforms Zorin OS 17 Core into a clean macOS-style desktop. It covers boot screen, login screen, desktop theme, dock, icons, cursors, fonts, sound, touchpad, battery optimization, and security. Everything here uses free, open-source tools unless otherwise noted.</p>
+      </section>
+
+      <hr>
+
+      <section id="quick-install">
+        <h2>Quick Install</h2>
+        <p>If you want to skip the manual steps, use the automated script:</p>
+        <pre><code>chmod +x scripts/mac-look-zorin.sh
+./scripts/mac-look-zorin.sh</code></pre>
+        <p>Then follow the manual steps printed at the end of the script output.</p>
+      </section>
+
+      <hr>
+
+      <h2>Step-by-Step Guide</h2>
+
+      <!-- STEP 1 -->
+      <section id="step-1">
+        <div class="step-header">
+          <span class="step-badge">STEP 01</span>
+          <span class="step-title">Apple Plymouth Boot Screen</span>
+        </div>
+        <p>Replaces the Zorin boot logo with an Apple-style animation.</p>
+        <pre><code>sudo apt install git
+git clone https://github.com/fathyar/mac-plymouth.git && cd mac-plymouth
+sudo cp -r mac /usr/share/plymouth/themes
+sudo update-alternatives --install \
+  /usr/share/plymouth/themes/default.plymouth \
+  default.plymouth \
+  /usr/share/plymouth/themes/mac/mac.plymouth 100
+sudo update-alternatives --config default.plymouth
+sudo update-initramfs -u</code></pre>
+        <p><strong>Preview without rebooting:</strong></p>
+        <pre><code>sudo plymouthd; sudo plymouth --show-splash; sleep 5; sudo plymouth --quit</code></pre>
+        <p><strong>Plymouth config</strong> (<code>/etc/plymouth/plymouthd.conf</code>):</p>
+        <pre><code>[Daemon]
+Theme=mac
+ShowDelay=0</code></pre>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="step-2">
+        <div class="step-header">
+          <span class="step-badge">STEP 02</span>
+          <span class="step-title">WhiteSur Dark Theme</span>
+        </div>
+        <p>Installs the macOS Big Sur inspired GTK theme, wallpapers, and GDM login screen.</p>
+        <pre><code>sudo apt install imagemagick sassc
+git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
+cd WhiteSur-gtk-theme
+
+# Install desktop theme
+./install.sh -c Dark
+
+# Install wallpapers
+git clone https://github.com/vinceliuice/WhiteSur-wallpapers.git
+cd WhiteSur-wallpapers && ./install-gnome-backgrounds.sh && cd ..
+
+# Install GDM login/lock screen
+sudo ./tweaks.sh -g</code></pre>
+        <p>Apply in <strong>GNOME Tweaks &gt; Appearance</strong>:</p>
+        <table>
+          <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Shell</td><td>WhiteSur-Dark-solid</td></tr>
+            <tr><td>Icons</td><td>WhiteSur-light</td></tr>
+            <tr><td>Cursor</td><td>McMojave-cursors</td></tr>
+            <tr><td>Legacy Applications</td><td>ZorinBlue-Dark or WhiteSur-Dark-solid</td></tr>
+          </tbody>
+        </table>
+        <div class="note"><strong>Light theme users:</strong> Replace <code>-c Dark</code> with <code>-c Light</code> and set Shell and Legacy Applications to <code>WhiteSur-Light-solid</code> in GNOME Tweaks.</div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="step-3">
+        <div class="step-header">
+          <span class="step-badge">STEP 03</span>
+          <span class="step-title">McMojave Cursors</span>
+        </div>
+        <pre><code>git clone https://github.com/yeyushengfan258/McMojave-cursors.git
+cd McMojave-cursors && ./install.sh</code></pre>
+        <p>Then set in <strong>GNOME Tweaks &gt; Appearance &gt; Cursor</strong>.</p>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="step-4">
+        <div class="step-header">
+          <span class="step-badge">STEP 04</span>
+          <span class="step-title">WhiteSur Icon Theme</span>
+        </div>
+        <pre><code>git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
+cd WhiteSur-icon-theme && ./install.sh</code></pre>
+        <p>Then set in <strong>GNOME Tweaks &gt; Appearance &gt; Icons</strong>.</p>
+      </section>
+
+      <!-- STEP 5 -->
+      <section id="step-5">
+        <div class="step-header">
+          <span class="step-badge">STEP 05</span>
+          <span class="step-title">Remove GDM Logo</span>
+        </div>
+        <p><strong>Step 1:</strong> Open the GDM config file:</p>
+        <pre><code>sudo nano /etc/gdm3/greeter.dconf-defaults</code></pre>
+        <p>Find the logo line and set it to empty:</p>
+        <pre><code>logo=''</code></pre>
+        <p>Save with Ctrl+X, then Y, then Enter.</p>
+        <p><strong>Step 2:</strong> Apply and reset:</p>
+        <pre><code>sudo dconf update
+sudo rm -rf /var/lib/gdm3/.config/dconf
+sudo reboot</code></pre>
+      </section>
+
+      <!-- STEP 6 -->
+      <section id="step-6">
+        <div class="step-header">
+          <span class="step-badge">STEP 06</span>
+          <span class="step-title">Fonts</span>
+        </div>
+        <pre><code>sudo apt install fonts-inter fonts-jetbrains-mono</code></pre>
+        <p>Then open <strong>GNOME Tweaks &gt; Fonts</strong> and set:</p>
+        <table>
+          <thead><tr><th>Field</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Interface Text</td><td>Inter Regular 11</td></tr>
+            <tr><td>Document Text</td><td>Inter Regular 11</td></tr>
+            <tr><td>Monospace Text</td><td>JetBrains Mono Regular 11</td></tr>
+            <tr><td>Legacy Window Titles</td><td>Inter Bold 11</td></tr>
+            <tr><td>Antialiasing</td><td>Subpixel (for LCD screens)</td></tr>
+            <tr><td>Hinting</td><td>Slight</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- STEP 7 -->
+      <section id="step-7">
+        <div class="step-header">
+          <span class="step-badge">STEP 07</span>
+          <span class="step-title">macOS Sound Theme</span>
+        </div>
+        <pre><code>git clone https://github.com/gxanshu/macos-bigsur-sound-theme-linux.git
+cd macos-bigsur-sound-theme-linux
+mkdir -p ~/.local/share/sounds
+cp -r theme ~/.local/share/sounds/bigsur</code></pre>
+        <p>Activate it:</p>
+        <pre><code>gsettings set org.gnome.desktop.sound theme-name 'bigsur'
+gsettings set org.gnome.desktop.sound event-sounds true</code></pre>
+        <div class="note">The sounds are extracted from macOS Big Sur and are technically Apple's property. Use at your own discretion.</div>
+      </section>
+
+      <!-- STEP 8 -->
+      <section id="step-8">
+        <div class="step-header">
+          <span class="step-badge">STEP 08</span>
+          <span class="step-title">Dock and Layout</span>
+        </div>
+        <p>Open <strong>Zorin Appearance</strong> from the app menu:</p>
+        <ul>
+          <li>Go to <strong>Layout</strong> and select the bottom dock layout</li>
+          <li>Go to <strong>Windows</strong> and set titlebar buttons to <strong>Left</strong></li>
+        </ul>
+      </section>
+
+      <!-- STEP 9 -->
+      <section id="step-9">
+        <div class="step-header">
+          <span class="step-badge">STEP 09</span>
+          <span class="step-title">Touchpad — Mac-like Scrolling</span>
+        </div>
+        <pre><code>sudo apt install xserver-xorg-input-libinput
+sudo nano /etc/X11/xorg.conf.d/30-touchpad.conf</code></pre>
+        <p>Add this content:</p>
+        <pre><code>Section "InputClass"
+    Identifier "touchpad"
+    Driver "libinput"
+    MatchIsTouchpad "on"
+    Option "NaturalScrolling" "true"
+    Option "ScrollPixelDistance" "60"
+    Option "Accel Speed" "0.3"
+    Option "Tapping" "on"
+    Option "TappingDrag" "on"
+    Option "DisableWhileTyping" "on"
+EndSection</code></pre>
+        <div class="note">ScrollPixelDistance of 60 gives the closest feel to macOS. Adjust between 50-75 to taste.</div>
+      </section>
+
+      <!-- STEP 10 -->
+      <section id="step-10">
+        <div class="step-header">
+          <span class="step-badge">STEP 10</span>
+          <span class="step-title">Lid Close — Suspend on Clamshell</span>
+        </div>
+        <pre><code>sudo nano /etc/systemd/logind.conf</code></pre>
+        <p>Set these values:</p>
+        <pre><code>HandleLidSwitch=suspend
+HandleLidSwitchExternalPower=suspend</code></pre>
+        <pre><code>sudo systemctl restart systemd-logind</code></pre>
+      </section>
+
+      <!-- STEP 11 -->
+      <section id="step-11">
+        <div class="step-header">
+          <span class="step-badge">STEP 11</span>
+          <span class="step-title">Boot Time Optimization</span>
+        </div>
+        <pre><code># Disable NetworkManager wait (~6 seconds saved)
+sudo systemctl disable NetworkManager-wait-online.service
+
+# Disable snapd seeded (~1 second saved)
+sudo systemctl disable snapd.seeded.service</code></pre>
+        <div class="note">Keep fwupd.service enabled for firmware security updates.</div>
+      </section>
+
+      <!-- STEP 12 -->
+      <section id="step-12">
+        <div class="step-header">
+          <span class="step-badge">STEP 12</span>
+          <span class="step-title">SSD Optimization</span>
+        </div>
+        <pre><code>echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p</code></pre>
+      </section>
+
+      <!-- STEP 13 -->
+      <section id="step-13">
+        <div class="step-header">
+          <span class="step-badge">STEP 13</span>
+          <span class="step-title">Battery Optimization — TLP</span>
+        </div>
+        <pre><code>sudo apt install tlp tlp-rdw
+sudo systemctl enable tlp
+sudo systemctl start tlp
+sudo tlp-stat -s</code></pre>
+        <p>Check battery health anytime:</p>
+        <pre><code>upower -i $(upower -e | grep battery)</code></pre>
+      </section>
+
+      <!-- STEP 14 -->
+      <section id="step-14">
+        <div class="step-header">
+          <span class="step-badge">STEP 14</span>
+          <span class="step-title">Fan Control — mbpfan</span>
+        </div>
+        <pre><code>sudo apt install mbpfan
+sudo systemctl enable mbpfan
+sudo systemctl start mbpfan
+sudo systemctl status mbpfan</code></pre>
+      </section>
+
+      <!-- STEP 15 -->
+      <section id="step-15">
+        <div class="step-header">
+          <span class="step-badge">STEP 15</span>
+          <span class="step-title">Security — Enable Firewall</span>
+        </div>
+        <pre><code>sudo ufw enable
+sudo ufw status</code></pre>
+      </section>
+
+      <!-- STEP 16 -->
+      <section id="step-16">
+        <div class="step-header">
+          <span class="step-badge">STEP 16</span>
+          <span class="step-title">System Backup — Timeshift</span>
+        </div>
+        <pre><code>sudo apt install timeshift</code></pre>
+        <p>Open Timeshift, select RSYNC, enable <strong>Include Only Hidden Files</strong> for both users, then create a snapshot:</p>
+        <pre><code>sudo timeshift --create --comments "macOS setup complete - $(date +%Y-%m-%d)"</code></pre>
+      </section>
+
+      <!-- STEP 17 -->
+      <section id="step-17">
+        <div class="step-header">
+          <span class="step-badge">STEP 17</span>
+          <span class="step-title">RAM Optimization (4GB Systems)</span>
+        </div>
+        <pre><code># Install ZRAM
+sudo apt install zram-config
+sudo reboot
+
+# Remove GNOME file indexer
+sudo apt remove tracker tracker-miner-fs -y
+sudo apt autoremove -y
+
+# Disable GNOME remote desktop
+sudo systemctl disable gnome-remote-desktop.service
+sudo systemctl stop gnome-remote-desktop.service</code></pre>
+        <p>Install <strong>Tab Suspender</strong> in Brave to reduce browser RAM usage from 3.6GB to under 2GB with 10-20 tabs open.</p>
+        <table>
+          <thead><tr><th>Metric</th><th>Before</th><th>After</th></tr></thead>
+          <tbody>
+            <tr><td>RAM used</td><td>3.1GB</td><td>1.8GB</td></tr>
+            <tr><td>RAM available</td><td>630MB</td><td>2.0GB</td></tr>
+            <tr><td>Swap used</td><td>1.8GB</td><td>858MB</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- STEP 18 -->
+      <section id="step-18">
+        <div class="step-header">
+          <span class="step-badge">STEP 18</span>
+          <span class="step-title">macOS-style Keyboard Shortcuts</span>
+        </div>
+        <p>Swap Command and Ctrl so Command handles copy/paste and all window shortcuts:</p>
+        <pre><code>gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:swap_lwin_lctl']"
+gsettings set org.gnome.mutter overlay-key ''</code></pre>
+        <p>Log out and back in, then run the shortcuts script:</p>
+        <pre><code>chmod +x ~/mac-shortcuts.sh
+./mac-shortcuts.sh</code></pre>
+        <table>
+          <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Cmd+C/V/X</td><td>Copy/Paste/Cut</td></tr>
+            <tr><td>Cmd+Q</td><td>Close window</td></tr>
+            <tr><td>Cmd+Tab</td><td>Switch apps</td></tr>
+            <tr><td>Cmd+Space</td><td>Search</td></tr>
+            <tr><td>Cmd+Shift+3</td><td>Screenshot</td></tr>
+            <tr><td>Cmd+Shift+4</td><td>Screenshot window</td></tr>
+            <tr><td>Cmd+Shift+5</td><td>Screenshot tool</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr>
+
+      <!-- MAINTENANCE -->
+      <section id="maintenance">
+        <h2>Monthly Maintenance</h2>
+        <pre><code>sudo apt update && sudo apt upgrade -y
+sudo fwupdmgr refresh && sudo fwupdmgr update
+sudo apt autoremove -y && sudo apt clean
+sudo journalctl --vacuum-time=7d
+rm -rf ~/.local/share/Trash/*</code></pre>
+      </section>
+
+      <hr>
+
+      <!-- RESULTS -->
+      <section id="results">
+        <h2>Final Result</h2>
+        <div class="result-summary">
+          <table>
+            <thead><tr><th>Component</th><th>Solution</th></tr></thead>
+            <tbody>
+              <tr><td>Boot screen</td><td>mac-plymouth (Apple logo)</td></tr>
+              <tr><td>Login / lock screen</td><td>WhiteSur Dark GDM, no logo</td></tr>
+              <tr><td>Desktop theme</td><td>WhiteSur-Dark-solid</td></tr>
+              <tr><td>App theme</td><td>ZorinBlue-Dark</td></tr>
+              <tr><td>Icons</td><td>WhiteSur-light</td></tr>
+              <tr><td>Cursor</td><td>McMojave-cursors</td></tr>
+              <tr><td>Fonts</td><td>Inter Regular + JetBrains Mono</td></tr>
+              <tr><td>Sound theme</td><td>macOS Big Sur</td></tr>
+              <tr><td>Dock</td><td>Bottom centered, macOS style</td></tr>
+              <tr><td>Window buttons</td><td>Left side</td></tr>
+              <tr><td>Touchpad</td><td>Natural scrolling, tap to click</td></tr>
+              <tr><td>Lid close</td><td>Suspend</td></tr>
+              <tr><td>Battery</td><td>TLP + mbpfan</td></tr>
+              <tr><td>Firewall</td><td>UFW enabled</td></tr>
+              <tr><td>Swappiness</td><td>10 (SSD optimized)</td></tr>
+              <tr><td>RAM optimization</td><td>ZRAM + Tab Suspender</td></tr>
+              <tr><td>Keyboard shortcuts</td><td>macOS-style via Command key</td></tr>
+              <tr><td>Backup</td><td>Timeshift snapshot</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="guide-cta">
+        <h3>Found this useful?</h3>
+        <p>Star the repository on GitHub to help others find it.</p>
+        <a href="https://github.com/LiminalEcho/macos-look-zorin-os" class="btn">Star on GitHub</a>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>
+      <a href="https://github.com/LiminalEcho/macos-look-zorin-os">LiminalEcho/macos-look-zorin-os</a> ·
+      MIT License ·
+      Tested on MacBook Air 2013 · Zorin OS 17 Core
+    </p>
+  </footer>
+
+</body>
+</html>
